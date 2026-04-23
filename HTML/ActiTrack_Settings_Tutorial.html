@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ActiTrack - 使用教學</title>
+  <link rel="stylesheet" href="actitrack-style.css" />
+  <style>
+    .main-content { overflow-y: auto !important; }
+
+    /* 教學卡片置中 */
+    .tutorial-container { 
+        display: flex; justify-content: center; padding-top: 20px; padding-bottom: 40px; 
+    }
+    /* min-height 確保內容少時卡片仍有一定高度 */
+    .tutorial-card { 
+        background-color: #dcdcdc; 
+        border-radius: 20px; padding: 40px 60px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        display: flex; flex-direction: column; gap: 20px; 
+        width: 95%; max-width: 1400px; min-height: 500px; 
+    }
+    /* 教學標題（下邊框作為分隔線） */
+    .tutorial-title { 
+        font-size: calc(1.8vw + 12px); font-weight: bold; color: #333; 
+        margin-bottom: 10px; border-bottom: 2px solid #bbb; padding-bottom: 15px; 
+    }
+    /* white-space:pre-wrap 保留換行與空白；適合顯示格式化文字 */
+    .tutorial-content { 
+        font-size: calc(1.2vw + 6px); color: #222; line-height: 1.8; white-space: pre-wrap; 
+    }
+  </style>
+</head>
+<body>
+  <button id="restore-btn" class="restore-btn" onclick="toggleSidebar()">☰</button>
+  <div class="container" id="container">
+    
+    <div class="sidebar" id="sidebar">
+      <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="title" onclick="window.location.href='ActiTrack_Interface.html'" style="cursor: pointer;">ActiTrack 返回系統</div>
+      </div>
+      <div class="menu-section">
+        <!-- 設定選單：預設收起 -->
+        <div class="menu-item" onclick="toggleSubmenu('submenu1')">
+          <span>設定</span><span class="dropdown-icon" id="icon1">▼</span>
+        </div>
+        <div class="submenu" id="submenu1" style="display: block;">
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Settings_Profile.html'">使用者設定</div>
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Settings_Body.html'">個人資料更新</div>
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Params_Editor.html?source=settings'">運動參數調整</div>
+        </div>
+        
+        <!-- 使用教學：rotated + display:block = 預設展開 -->
+        <div class="menu-item" onclick="toggleSubmenu('submenu2')">
+          <span>使用教學</span><span class="dropdown-icon rotated" id="icon2">▼</span>
+        </div>
+        <div class="submenu" id="submenu2" style="display: block;">
+          <!-- data-topic 供 JS 與 URL 的 ?topic= 對照，決定哪個項目加上 active -->
+          <div class="submenu-item tutorial-link" data-topic="system_guide" onclick="window.location.href='ActiTrack_Settings_Tutorial.html?topic=system_guide'">系統操作教學</div>
+          <div class="submenu-item tutorial-link" data-topic="delete_bmi" onclick="window.location.href='ActiTrack_Settings_Tutorial.html?topic=delete_bmi'">如何刪除我的BMI紀錄</div>
+        </div>
+      </div>
+      
+      <div class="user-section">
+        <div class="user-info-container">
+          <div class="user-icon">
+            <img id="sidebar-user-avatar" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+            <svg id="sidebar-user-placeholder" class="avatar-placeholder" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="user-name">user</div>
+        </div>
+        <div class="settings-icon" onclick="window.location.href='ActiTrack_Interface.html'" title="返回主畫面" style="display: flex; align-items: center; justify-content: center;">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 1em; height: 1em;"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="resizer" id="resizer"></div>
+
+    <div class="main-content">
+      <!-- 大標題：JS 依 ?topic 動態更新文字 -->
+      <div id="page-main-title" style="font-size: calc(2vw + 10px); font-weight: bold; padding: 2% 0; color: #333;">系統操作教學</div>
+      <div class="tutorial-container">
+        <div class="tutorial-card">
+          <!-- 卡片內標題：JS 依 ?topic 動態更新 -->
+          <div id="card-inner-title" class="tutorial-title">ActiTrack 快速入門指南</div>
+          <!-- 教學內文：由 actitrack-settings-api.js 從後端取得並插入 -->
+          <div id="dynamic-tutorial-text" class="tutorial-content">資料載入中...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/actitrack-settings-api.js"></script>  <!-- 設定頁 API 通訊 -->
+  <script src="js/actitrack-settings-ui.js"></script>   <!-- 設定頁共用 UI -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 載入教學內文
+        if (window.actiTrackSettings) {
+            window.actiTrackSettings.loadTutorialText('dynamic-tutorial-text');
+        }
+
+        // 從 URL 讀取 ?topic 參數，未指定時預設 system_guide
+        const currentTopic = new URLSearchParams(window.location.search).get('topic') || 'system_guide';
+        
+        // topic 與頁面標題的對應表
+        const titleMap = {
+            'system_guide': { main: '系統操作教學', inner: 'ActiTrack 快速入門指南' },
+            'delete_bmi':   { main: 'BMI紀錄管理',  inner: '如何刪除我的BMI紀錄' }
+        };
+
+        const titles = titleMap[currentTopic] || { main: '使用教學', inner: '說明文件' };
+        document.getElementById('page-main-title').textContent = titles.main;
+        document.getElementById('card-inner-title').textContent = titles.inner;
+
+        // 對照 data-topic，替符合的側邊欄項目加上 active 樣式
+        document.querySelectorAll('.tutorial-link').forEach(link => {
+            link.classList.toggle('active', link.getAttribute('data-topic') === currentTopic);
+        });
+    });
+  </script>
+</body>
+<script src="js/ActiTrack_User_Sync.js"></script>
+</html>

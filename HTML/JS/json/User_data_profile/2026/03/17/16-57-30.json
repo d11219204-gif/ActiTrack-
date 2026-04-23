@@ -1,0 +1,14 @@
+{
+    "basic_info": {
+        "height_cm": 300,
+        "weight_kg": 500
+    },
+    "optional_info": {
+        "age": 150,
+        "dob": "2100-12-31",
+        "body_fat_percent": 100,
+        "skeletal_muscle_kg": 200,
+        "bmr_kcal": 5000
+    },
+    "last_updated": "2026/3/17 下午4:57:30"
+}

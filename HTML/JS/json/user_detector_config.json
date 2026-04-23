@@ -1,0 +1,23 @@
+{
+    "system_settings": {
+        "video_width": 1920,
+        "video_height": 1080
+    },
+    "SquatDetector": {
+        "waist_up_angle": 121,
+        "waist_down_angle": 90,
+        "knee_straight_angle": 120,
+        "knee_down_angle": 90,
+        "auto_pause_seconds": 5
+    },
+    "JumpingJackDetector": {
+        "arm_down_angle": 45,
+        "arm_up_angle": 155,
+        "elbow_straight_angle": 50,
+        "knee_straight_angle": 150,
+        "knee_strict_angle": 165,
+        "leg_in_angle": 95,
+        "leg_out_angle": 120,
+        "auto_pause_seconds": 5
+    }
+}

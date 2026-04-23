@@ -1,0 +1,16 @@
+[
+    {
+        "basic_info": {
+            "height_cm": 111,
+            "weight_kg": 111
+        },
+        "optional_info": {
+            "age": 111,
+            "dob": "0222-02-02",
+            "body_fat_percent": 0,
+            "skeletal_muscle_kg": 0,
+            "bmr_kcal": 0
+        },
+        "last_updated": "2026/4/14 下午8:45:46"
+    }
+]

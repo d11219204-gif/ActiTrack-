@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ActiTrack - 使用者設定</title>
+  <link rel="stylesheet" href="actitrack-style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+  <style>
+    .main-content { overflow-y: auto !important; padding-bottom: 40px; }
+
+    /* 個人資料卡片置中 */
+    .profile-container { display: flex; justify-content: center; padding-top: 20px; }
+    /* overflow:hidden 讓頂部圓角不被子元素蓋掉 */
+    .profile-card { 
+        background-color: #dcdcdc;
+        border-radius: 20px; padding: 0; overflow: hidden; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        width: 95%; max-width: 1400px;
+    }
+    /* 卡片頂部標題帶 */
+    .profile-header { background-color: #aebbc1; padding: 1.5% 0; text-align: center; font-size: calc(1.5vw + 12px); font-weight: bold; color: #333; }
+    /* 卡片主體：左側頭像 + 右側表單橫向排列 */
+    .profile-body { padding: 50px 80px; display: flex; gap: 60px; align-items: flex-start; justify-content: center; }
+    
+    /* 頭像區：圖片 + 按鈕縱向排列 */
+    .avatar-section { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    /* 頭像圓形框：border-radius:50% 成圓；overflow:hidden 裁切超出範圍的圖片 */
+    .avatar-circle { 
+        width: 220px; height: 220px;
+        background-color: white; border-radius: 50%; 
+        display: flex; align-items: center; justify-content: center; 
+        border: 3px solid #ccc; cursor: pointer; transition: all 0.3s ease; 
+        overflow: hidden; position: relative;
+    }
+    /* hover 時輕微放大並加上藍色外框 */
+    .avatar-circle:hover { transform: scale(1.02); border-color: #3b5998; box-shadow: 0 0 15px rgba(59, 89, 152, 0.3); }
+    /* object-fit:cover 讓圖片填滿圓框並維持比例 */
+    .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+    /* 未設定頭像時顯示的預設人形圖示 */
+    .avatar-placeholder { width: 60%; height: 60%; color: #888; }
+    
+    .avatar-btn { background-color: #3b5998; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; transition: background-color 0.2s; }
+    .avatar-btn:hover { background-color: #2d4373; }
+    
+    /* 表單區：flex:1 佔用剩餘橫向空間 */
+    .form-section { flex: 1; display: flex; flex-direction: column; gap: 30px; max-width: 600px; padding-top: 20px; }
+    /* 各欄位列：固定寬度標籤 + 輸入框橫向排列 */
+    .form-group { display: flex; align-items: center; gap: 20px; }
+    .form-group label { width: 100px; font-size: 1.3rem; font-weight: bold; color: #333; text-align: right; }
+    .input-wrapper { flex: 1; background-color: #fff; border-radius: 8px; border: 1px solid #ccc; padding: 5px 15px; }
+    /* background:transparent 讓 input 使用外框的白色背景 */
+    .form-group input { width: 100%; border: none; padding: 10px 0; font-size: 1.2rem; outline: none; color: #333; background: transparent; }
+    
+    /* 按鈕列：flex:1 讓兩個按鈕等寬 */
+    .btn-group { display: flex; gap: 20px; margin-top: 30px; }
+    .btn { flex: 1; padding: 15px; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: opacity 0.2s; }
+    .btn-primary   { background-color: #27ae60; color: white; }
+    .btn-secondary { background-color: #95a5a6; color: white; }
+    .btn:hover { opacity: 0.9; }
+
+    /* 裁切 Modal：position:fixed 覆蓋整個畫面，z-index:1000 顯示在最上層 */
+    /* display:none → flex 切換控制顯示 */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
+    .modal-content { background: white; padding: 20px; border-radius: 12px; width: 90%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+    /* 限制裁切區高度，避免畫面被撐開 */
+    .img-container { max-height: 500px; overflow: hidden; }
+    .img-container img { max-width: 100%; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 15px; }
+  </style>
+</head>
+<body>
+  <button id="restore-btn" class="restore-btn" onclick="toggleSidebar()">☰</button>
+  <div class="container" id="container">
+    <div class="sidebar" id="sidebar">
+      <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="title" onclick="window.location.href='ActiTrack_Interface.html'" style="cursor: pointer;">ActiTrack返回系統</div>
+      </div>
+      <div class="menu-section">
+        <div class="menu-item" onclick="toggleSubmenu('submenu1')">
+          <span>設定</span>
+          <span class="dropdown-icon rotated" id="icon1">▼</span>
+        </div>
+        <div class="submenu" id="submenu1" style="display: block;">
+          <div class="submenu-item active" onclick="window.location.href='ActiTrack_Settings_Profile.html'">使用者設定</div>
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Settings_Body.html'">個人資料更新</div>
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Params_Editor.html?source=settings'">運動參數調整</div>
+        </div>
+        
+        <div class="menu-item" onclick="toggleSubmenu('submenu2')">
+          <span>使用教學</span>
+          <span class="dropdown-icon" id="icon2">▼</span>
+        </div>
+        <div class="submenu" id="submenu2" style="display: none;">
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Settings_Tutorial.html?topic=system_guide'">系統操作教學</div>
+          <div class="submenu-item" onclick="window.location.href='ActiTrack_Settings_Tutorial.html?topic=delete_bmi'">如何刪除我的BMI紀錄</div>
+        </div>
+      </div>
+      
+      <div class="user-section">
+        <div class="user-info-container">
+          <div class="user-icon">
+            <img id="sidebar-user-avatar" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+            <svg id="sidebar-user-placeholder" class="avatar-placeholder" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="user-name">user</div>
+        </div>
+        <div class="settings-icon" onclick="window.location.href='ActiTrack_Interface.html'" title="返回主畫面" style="display: flex; align-items: center; justify-content: center;">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 1em; height: 1em;"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="resizer" id="resizer"></div>
+
+    <div class="main-content">
+      <div style="font-size: calc(2vw + 10px); font-weight: bold; padding: 2% 0; color: #333;">個人設定</div>
+      <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">頭像與暱稱</div>
+            <div class="profile-body">
+
+                <div class="avatar-section">
+                    <div class="avatar-circle" id="avatar-trigger">
+                        <img id="current-avatar" src="" style="display: none;">
+                        <svg id="avatar-placeholder" class="avatar-placeholder" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <button class="avatar-btn" id="avatar-btn-trigger">更換頭像</button>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>名稱:</label>
+                        <div class="input-wrapper"><input type="text" id="user-name-input" value="User" maxlength="20" placeholder="請輸入名稱(最長20字)"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>頭貼形狀:</label>
+                        <div class="input-wrapper">
+                            <select id="avatar-shape-select" style="width: 100%; padding: 8px; border-radius: 5px; font-size: 16px; background: #fff; border: 1px solid #ccc;">
+                                <option value="circle">圓形 (預設)</option>
+                                <option value="square">方形 (微圓角)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>字體大小:</label>
+                        <div class="input-wrapper" style="display: flex; gap: 10px; align-items: center; background: transparent; border: none; padding: 0;">
+                            <select id="font-scale-select" onchange="handleFontScaleChange()" style="flex: 1; padding: 10px; border-radius: 8px; font-size: 1.2rem; border: 1px solid #ccc; background: #fff;">
+                                <option value="0.8">小 (80%)</option>
+                                <option value="1" selected>預設 (100%)</option>
+                                <option value="1.2">大 (120%)</option>
+                                <option value="1.5">特大 (150%)</option>
+                                <option value="custom">自訂義...</option>
+                            </select>
+                            <div id="custom-scale-wrapper" style="display: none; align-items: center; gap: 5px; flex: 1;">
+                                <input type="number" id="font-scale-custom" onchange="applyCustomFontScale()" style="width: 100%; padding: 8px; border-radius: 5px; font-size: 16px; border: 1px solid #ccc; background: #fff;" min="50" max="300" placeholder="100">
+                                <span style="font-size: 16px; font-weight: bold; color: #333;">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="label-with-icon">
+                        <label>攝影機解析度:</label>
+                      </div>
+                      <div class="input-wrapper">
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                          <input type="number" id="cam-width" class="form-control" placeholder="寬度 (例: 1280)" min="320" max="3840" style="flex: 1;">
+                          <span style="color: #666; font-weight: bold; font-size: 1.2rem;">X</span>
+                          <input type="number" id="cam-height" class="form-control" placeholder="高度 (例: 720)" min="240" max="2160" style="flex: 1;">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mediapipe-model">AI 模型</label>
+                        <div class="input-wrapper" style="padding: 0;">
+                            <select id="model-select" class="form-select" onchange="changeAiModel(this.value)">
+                                <option value="" disabled selected>請選擇欲切換的模型...</option>
+                                <option value="1">MediaPipe Lite (低延遲，適合老舊電腦)</option>
+                                <option value="2">MediaPipe Full (平衡，預設)</option>
+                                <option value="3">MediaPipe Heavy (高精度，適合高效能電腦)</option>
+                            </select>
+                            <p id="current-model-display" style="font-size:0.85em; color:#888; margin-top:4px;">
+                                🔄 載入中...
+                            </p>
+                        </div>
+                        <span style="font-size: 0.8rem; color: #666;">切換後，下次開啟偵測時生效</span>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" onclick="updateUsername()">資料更新</button>
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='ActiTrack_Interface.html'">取消返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="crop-modal">
+    <div class="modal-content">
+        <h3 style="margin: 0; color: #333;">裁切頭像</h3>
+        <div class="img-container">
+            <img id="image-to-crop" src="">
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="crop-cancel">取消</button>
+            <button class="btn btn-primary" id="crop-confirm">確認並上傳</button>
+        </div>
+    </div>
+  </div>
+
+  <script src="js/ActiTrack_User_Sync.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  
+  <script>
+    let isResizing = false;
+    const resizer = document.getElementById('resizer');
+    const sidebar = document.getElementById('sidebar');
+
+    // if 檢查確保元素存在，避免 null 錯誤
+    if (resizer && sidebar) {
+        resizer.addEventListener('mousedown', () => { 
+            isResizing = true; 
+            document.body.style.cursor = 'col-resize'; 
+            sidebar.style.transition = 'none'; // 拖曳中停用動畫
+            resizer.classList.add('active'); 
+        });
+        document.addEventListener('mousemove', (e) => { 
+            if (!isResizing) return; 
+            let p = (e.clientX / window.innerWidth) * 100; 
+            if (p < 10) p = 10; if (p > 50) p = 50; 
+            sidebar.style.flex = `0 0 ${p}%`; sidebar.style.width = `${p}%`; 
+        });
+        document.addEventListener('mouseup', () => { 
+            if (!isResizing) return; 
+            isResizing = false; 
+            document.body.style.cursor = 'default'; 
+            sidebar.style.transition = 'flex 0.4s ease'; // 拖曳結束後恢復動畫
+            resizer.classList.remove('active');
+        });
+    }
+
+    // hidden 類別控制顯示；setTimeout 讓還原按鈕在動畫結束後才出現
+    function toggleSidebar() { 
+        const sidebar = document.getElementById('sidebar'); 
+        const restoreBtn = document.getElementById('restore-btn'); 
+        sidebar.classList.toggle('hidden'); 
+        if (sidebar.classList.contains('hidden')) { 
+            setTimeout(() => restoreBtn.classList.add('visible'), 300); 
+        } else { 
+            restoreBtn.classList.remove('visible'); 
+        } 
+    }
+    
+    // 切換折疊選單，並將狀態存入 localStorage 跨頁保留
+    function toggleSubmenu(id) { 
+        const sm = document.getElementById(id); 
+        const icon = document.getElementById(id === 'submenu1' ? 'icon1' : 'icon2'); 
+        if (sm.style.display === 'none' || sm.style.display === '') { 
+            sm.style.display = 'block'; 
+            icon.classList.add('rotated');
+            localStorage.setItem('actitrack_' + id, 'open');
+        } else { 
+            sm.style.display = 'none'; 
+            icon.classList.remove('rotated'); 
+            localStorage.setItem('actitrack_' + id, 'closed');
+        } 
+    }
+
+    // 即時執行函式：頁面載入時從 localStorage 還原選單狀態，防止畫面閃爍
+    (function instantRestoreSettings() {
+        ['submenu1', 'submenu2'].forEach(id => {
+            const savedState = localStorage.getItem('actitrack_' + id);
+            const sm = document.getElementById(id);
+            const icon = document.getElementById(id === 'submenu1' ? 'icon1' : 'icon2');
+            if (sm && icon) {
+                if (savedState === 'open')   { sm.style.display = 'block'; icon.classList.add('rotated'); }
+                else if (savedState === 'closed') { sm.style.display = 'none'; icon.classList.remove('rotated'); }
+            }
+        });
+    })();
+
+    // 已移除重複宣告的 resizer 事件監聽器修復 Bug
+  </script>
+  <script src="js/ActiTrack_Settings_Profile.js"></script>
+  
+</body>
+</html>

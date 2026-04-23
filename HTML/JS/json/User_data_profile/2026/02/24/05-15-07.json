@@ -1,0 +1,14 @@
+{
+    "basic_info": {
+        "height_cm": 144,
+        "weight_kg": 55
+    },
+    "optional_info": {
+        "age": 12,
+        "dob": "2014-02-22",
+        "body_fat_percent": 11,
+        "skeletal_muscle_kg": 22,
+        "bmr_kcal": 546
+    },
+    "last_updated": "2026/2/24 上午5:15:07"
+}

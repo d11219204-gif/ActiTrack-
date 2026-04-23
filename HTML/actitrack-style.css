@@ -1,0 +1,587 @@
+
+/* ==========================================
+   1. 基礎設定與重置 (Base & Reset)
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Microsoft JhengHei", Arial, sans-serif;
+    background-color: #e8e8e8;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   2. 全域排版架構 (Global Layout)
+   ========================================== */
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    background-color: #6b7b7f;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; 
+    padding: 2vh 2%;
+    background-color: white;
+    margin: 1.5%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: margin 0.4s ease;
+    overflow: hidden;
+    word-wrap: break-word;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   3. 側邊欄與導覽選單 (Sidebar & Menu)
+   ========================================== */
+.sidebar {
+    flex: 0 0 22%; 
+    width: 22%;
+    min-width: 250px; 
+    max-width: 400px;
+    background-color: #6b7b7f; 
+    color: white;
+    padding: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.sidebar.hidden {
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0;
+    padding: 0;
+}
+
+.resizer {
+    width: 5px;
+    background-color: transparent;
+    cursor: col-resize;
+    z-index: 10;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.resizer:hover, .resizer.active {
+    background-color: #8a9a9e;
+}
+
+.header {
+    background-color: #526165;
+    padding: 3% 8%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 10%;
+    gap: 5%;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.menu-toggle {
+    font-size: 2.5vw; 
+    min-font-size: 14px; 
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+/* --- 側邊欄文字 (保留不換行) --- */
+.title {
+    font-size: calc(1.8vw * var(--font-scale, 1));
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.user-name {
+    font-size: calc(1.5vw * var(--font-scale, 1));
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.menu-item {
+    font-size: calc(1.6vw * var(--font-scale, 1)); 
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    /* 其他保留你的 padding 等設定 */
+}
+.submenu-item {
+    font-size: calc(1.4vw * var(--font-scale, 1));
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* --- 主畫面文字 (標題與說明) --- */
+.content-header {
+    font-size: calc((3vw + 24px) * var(--font-scale, 1)) !important; 
+    font-weight: bold; 
+    color: #333;
+}
+.content-text {
+    font-size: calc((1vw + 8px) * var(--font-scale, 1)) !important; 
+    line-height: 1.5;
+}
+
+/* --- 表格與列表文字 (ActiTrack_Interface 中的參數表) --- */
+.param-row {
+    font-size: calc(16px * var(--font-scale, 1)) !important;
+}
+
+/* --- 設定頁面 (ActiTrack_Settings_Profile 中的文字) --- */
+.profile-header {
+    font-size: calc((1.5vw + 12px) * var(--font-scale, 1)); 
+}
+label, input, select, button {
+    font-size: calc(16px * var(--font-scale, 1));
+}
+.menu-section {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    padding-top: 2%;
+    scrollbar-width: thin;
+    scrollbar-color: #526165 #6b7b7f;
+}
+
+.menu-item {
+    padding: 6% 10% 6% 18%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 1.6vw; 
+    border-bottom: 1px solid #5a6a6e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 4vw; 
+}
+
+.menu-item:hover {
+    background-color: #576366;
+}
+
+.menu-item.active {
+    background-color: #4a5a5e; 
+    border-left: 4px solid #fff; 
+    padding-left: calc(18% - 4px); 
+}
+
+.submenu {
+    background-color: #7a8a8e;
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.submenu.collapsed {
+    max-height: 0;
+}
+
+.submenu-item {
+    padding: 4% 10% 4% 22%;
+    cursor: pointer;
+    font-size: 1.4vw;
+    border-bottom: 1px solid #6b7b7f;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.submenu-item:hover {
+    background-color: #6a7a7e;
+}
+
+.submenu-item.active {
+    background-color: #526165 !important; 
+    color: #fff;
+    font-weight: bold;
+}
+
+.user-section {
+    padding: 4% 8%;
+    background-color: #5a6a6e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #4a5a5e;
+    height: auto;
+    min-height: 6vw;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.user-info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1vw;
+    overflow: hidden;
+}
+
+.user-icon {
+    width: 3.5vw;
+    height: 3.5vw;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #526165;
+    flex-shrink: 0;
+}
+
+.user-icon svg {
+    width: 70%;
+    height: 70%;
+}
+
+.user-name {
+    font-size: 1.5vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.settings-icon {
+    font-size: 2.5vw;
+    cursor: pointer;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+
+.settings-icon:hover {
+    transform: rotate(45deg);
+}
+
+.dropdown-icon {
+    transition: transform 0.3s;
+}
+
+.dropdown-icon.rotated {
+    transform: rotate(180deg);
+}
+
+.restore-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2000;
+    font-size: 24px;
+    background-color: #526165;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.restore-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ==========================================
+   4. ActiTrack Detect 專屬排版 (Detect Layout)
+   ========================================== */
+.detect-top {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+    margin-bottom: 2vh;
+    flex-shrink: 0;
+}
+
+.detect-now {
+    font-size: calc(1.4vw + 6px);
+    font-weight: 700;
+    color: #333;
+}
+
+.detect-name {
+    font-size: calc(1.5vw + 8px);
+    font-weight: 700;
+    color: #2b2bd6;
+}
+
+.detect-mid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 0.38fr 0.62fr;
+    gap: 20px;
+    min-height: 0; 
+}
+
+.param-panel {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    overflow-y: auto;
+}
+
+.right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 0;
+}
+
+.preview-wrap {
+    flex: 1; 
+    background-color: #dcdcdc; 
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.placeholder-text {
+    position: absolute;
+    color: #555;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+}
+
+.preview-wrap img {
+    position: relative;
+    z-index: 2; 
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    background-color: #000; 
+}
+
+.skeleton-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.info-row {
+    display: flex;
+    gap: 15px;
+    flex-shrink: 0; 
+}
+
+.info-box {
+    flex: 1;
+    background-color: #dcdcdc; 
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 10px;
+    min-height: 80px;
+}
+
+.status-box {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.count-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.count-correct .count-number {
+    color: #27ae60;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.count-wrong .count-number {
+    color: #e74c3c;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.action-row {
+    display: flex;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.action-btn:active {
+    transform: scale(0.98); 
+}
+
+.btn-param {
+    background-color: #dcdcdc; 
+    color: #333;
+}
+
+.btn-param:hover { background-color: #c8c8c8; }
+
+.btn-stop {
+    background-color: #e74c3c; 
+    color: white;
+}
+
+.btn-stop:hover { background-color: #c0392b; }
+
+/* ==========================================
+   5. 動態狀態面板 (Dynamic State Panel)
+   ========================================== */
+.loading-text {
+    text-align: center;
+    padding: 20px;
+    color: #333;
+    font-size: 16px;
+}
+
+.param-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0; 
+    background-color: #ffffff; 
+    border-radius: 8px;
+}
+
+.param-row {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ecf0f1;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    background-color: #ffffff; 
+    color: #333333;            
+    font-size: 16px;           
+}
+
+.param-row.header {
+    font-weight: bold;
+    color: #555555;
+    background-color: #f8f9fa; 
+    border-bottom: 2px solid #bdc3c7;
+}
+
+.param-row.locked {
+    background-color: #d6eaf8; 
+    border-radius: 6px;
+    font-weight: bold;
+    color: #000000;            
+}
+
+.param-row.inactive {
+    opacity: 0.4;
+    background-color: #f9f9f9;
+}
+
+.param-name {
+    flex: 2; 
+    min-width: 0;
+    text-align: left;
+    white-space: nowrap;      
+    overflow: hidden;         
+    text-overflow: ellipsis;  
+    padding-right: 10px;
+}
+
+.param-correct {
+    flex: 1; 
+    min-width: 0; 
+    text-align: center;
+    color: #27ae60; 
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.param-wrong {
+    flex: 1; 
+    min-width: 0; 
+    text-align: center;
+    color: #e74c3c; 
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   6. 響應式佈局 (Responsive Design)
+   ========================================== */
+@media (max-width: 400px) {
+    .sidebar {
+        flex: 0 0 30%; 
+        width: 30%;
+    }
+    .menu-item {
+        font-size: 12px;
+    }
+    .user-name {
+        display: none;
+    }
+}
+
+/* ==========================================
+   強制字體縮放 (覆蓋所有行內樣式)
+   ========================================== */
+
+/* 主畫面標題與說明 */
+.content-header { 
+    font-size: calc((3vw + 24px) * var(--font-scale, 1)) !important; 
+}
+.content-text, #dynamic-help-text { 
+    font-size: calc((1vw + 8px) * var(--font-scale, 1)) !important; 
+}
+
+/* 側邊欄文字 */
+.title { font-size: calc(1.8vw * var(--font-scale, 1)) !important; }
+.menu-item span { font-size: calc(1.6vw * var(--font-scale, 1)) !important; }
+.submenu-item { font-size: calc(1.4vw * var(--font-scale, 1)) !important; }
+.user-name { font-size: calc(1.5vw * var(--font-scale, 1)) !important; }
+
+/* 設定頁面內容 */
+.profile-header { font-size: calc((1.5vw + 12px) * var(--font-scale, 1)) !important; }
+.form-group label { font-size: calc(16px * var(--font-scale, 1)) !important; }
+.form-group input, .form-group select { font-size: calc(14px * var(--font-scale, 1)) !important; }

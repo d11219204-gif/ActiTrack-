@@ -1,0 +1,16 @@
+[
+    {
+        "basic_info": {
+            "height_cm": 111,
+            "weight_kg": 79
+        },
+        "optional_info": {
+            "age": 87,
+            "dob": null,
+            "body_fat_percent": 11,
+            "skeletal_muscle_kg": 11,
+            "bmr_kcal": 11
+        },
+        "last_updated": "2026/4/14 下午7:36:54"
+    }
+]

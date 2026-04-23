@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ActiTrack運動辨識 - 偵測中</title>
+  <link rel="stylesheet" href="actitrack-style.css">
+</head>
+<body>
+    <button id="restore-btn" class="restore-btn" onclick="toggleSidebar()">☰</button>
+    <div id="model-badge" style="
+        position: absolute; 
+        top: 15px; 
+        right: 15px; 
+        background-color: rgba(0, 0, 0, 0.65); 
+        color: #00ffcc; 
+        padding: 6px 12px; 
+        border-radius: 8px; 
+        font-size: 0.9rem; 
+        font-weight: bold; 
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        backdrop-filter: blur(4px);
+        display: none; /* 預設先隱藏，等資料讀到再顯示 */
+    ">
+        🤖 AI 模型: 讀取中...
+    </div>
+    <div class="container" id="container">
+        <div class="sidebar" id="sidebar">
+            <div class="header">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="title" onclick="window.location.href='ActiTrack_Interface.html'" style="cursor: pointer;">ActiTrack運動辨識</div>
+            </div>
+            
+            <div class="menu-section">
+                <div class="menu-item" onclick="toggleSubmenu('submenu1')">
+                    <span>運動紀錄新增</span>
+                    <span class="dropdown-icon" id="icon1">▼</span>
+                </div>
+                <div class="submenu collapsed" id="submenu1"></div>
+                
+                <div class="menu-item" onclick="toggleSubmenu('submenu2')">
+                    <span>記錄查詢</span>
+                    <span class="dropdown-icon" id="icon2">▼</span>
+                </div>
+                <div class="submenu collapsed" id="submenu2">
+                    <div class="submenu-item" onclick="window.location.href='ActiTrack_Exercise_Record.html'">運動記錄</div>
+                    <div class="submenu-item" onclick="window.location.href='ActiTrack_BMI_Record.html'">數值紀錄</div>
+                </div>
+            </div>
+            
+            <div class="user-section">
+                <div class="user-info-container">
+                      <div class="user-icon">
+                        <img id="sidebar-user-avatar" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <svg id="sidebar-user-placeholder" class="avatar-placeholder" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                      </div>
+                      <div class="user-name">user</div>
+                </div>
+                <div class="settings-icon" onclick="window.location.href='ActiTrack_Settings_Profile.html'">⚙</div>
+            </div>
+            <div class="resizer" id="resizer"></div>
+        </div>
+        <div class="main-content">
+            <div class="detect-top" style="display: flex; align-items: center;">
+                <div class="detect-now">目前偵測為：</div>
+                <div class="detect-name" id="mode-display">載入中...</div>
+                
+                <div style="margin-left: auto; margin-right: 20px; position: relative;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label for="camera-select" style="color: #ccc; font-weight: bold;">📷 鏡頭：</label>
+                        <select id="camera-select" onchange="switchCamera(this.value)" style="padding: 6px 10px; border-radius: 6px; background: #2c3e50; color: white; border: 1px solid #34495e; cursor: pointer; font-size: 14px;">
+                            <option value="">掃描中...</option>
+                        </select>
+                    </div>
+                    <div id="cam-switch-msg" style="color: #f39c12; font-size: 20px; position: absolute; right: 0; top: 100%; margin-top: 4px;"></div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+            <div class="detect-mid">
+                
+                <div class="param-panel" id="feedback-display">
+                </div>
+
+                <div class="right-col">
+                    
+                    <div class="preview-wrap">
+                        <div class="placeholder-text"></div>
+                        <img id="live-feed" src="" alt="Live Stream" style="display: none;">
+                        
+                        <label class="skeleton-toggle">
+                            <input type="checkbox" checked onchange="toggleSkeletonUI(this.checked)"> 骨架
+                        </label>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="info-box status-box">
+                            <span id="status-text">偵測中...</span>
+                        </div>
+                        <div class="info-box count-correct">
+                            <div class="count-title">正確次數：</div>
+                            <div class="count-number" id="count-display">0</div>
+                        </div>
+                        <div class="info-box count-wrong">
+                            <div class="count-title">錯誤次數：</div>
+                            <div class="count-number" id="bad-count-display">0</div>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="action-btn btn-param" onclick="window.location.href='ActiTrack_Params_Editor.html?source=detect'">參數調整</button>
+                        <button class="action-btn btn-stop" onclick="stopAndExit()">停止偵測</button>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <script src="js/actitrack-api.js?v=5"></script>
+    <script src="js/actitrack-ui.js?v=5"></script>
+    
+    <script>
+        /**
+         * 呼叫 API 切換骨架顯示狀態
+         * @param {boolean} isChecked - checkbox 狀態
+         */
+        function toggleSkeletonUI(isChecked) {
+            if (window.actiTrack) window.actiTrack.toggleSkeleton(isChecked);
+        }
+
+        /**
+         * 停止偵測並跳轉回介面首頁
+         */
+        function stopAndExit() {
+            // 先停止前端的定時更新
+            if (window.actiTrack) window.actiTrack.stopMonitoring();
+            // 呼叫後端停止並存檔，完成後跳轉
+            fetch('/api/stop', { method: 'POST' }).finally(() => {
+                window.location.href = 'ActiTrack_Interface.html';
+            });
+        }
+
+        /**
+         * 向後端請求可用的鏡頭列表，並更新到 select 選單
+         * @returns {Promise} Fetch Promise
+         */
+        function loadCameras() {
+            return fetch('/api/get_cameras')
+                .then(res => res.json())
+                .then(cameras => {
+                    const select = document.getElementById('camera-select');
+                    select.innerHTML = ''; // 清空預設選項
+                    if (cameras.length === 0) {
+                        select.innerHTML = '<option value="">找不到鏡頭</option>';
+                        return;
+                    }
+                    // 將取得的鏡頭列表加入選單
+                    cameras.forEach(cam => {
+                        const opt = document.createElement('option');
+                        opt.value = cam.id;
+                        opt.textContent = cam.name;
+                        select.appendChild(opt);
+                    });
+                })
+                .catch(e => {
+                    console.error("無法取得鏡頭列表:", e);
+                    document.getElementById('camera-select').innerHTML = '<option value="">讀取失敗</option>';
+                });
+        }
+
+        /**
+         * 切換攝影機鏡頭
+         * 會先暫停當前監控，停止後端串流，再用新鏡頭 ID 重新啟動
+         * @param {string} cameraId - 選取的鏡頭 ID
+         */
+       function switchCamera(cameraId) {
+            if (!cameraId) return; // 防呆
+            const targetMode = new URLSearchParams(window.location.search).get('mode') || 'auto';
+            
+            // 停止前端監控定時器，並隱藏影像
+            if (window.actiTrack) window.actiTrack.stopMonitoring();
+            document.getElementById('live-feed').style.display = 'none';
+            
+            // 顯示切換提示文字
+            document.getElementById('cam-switch-msg').textContent = '切換鏡頭中...';
+            
+            // 通知後端停止當前串流
+            fetch('/api/stop', { method: 'POST' }).then(() => {
+                // 等待資源釋放後再啟動新串流
+                setTimeout(() => {
+                    fetch(`/api/start?mode=${targetMode}&camera_id=${cameraId}`, { method: 'POST' })
+                        .then(() => {
+                             if (window.actiTrack) {
+                                // 重新綁定並啟動前端監控
+                                window.actiTrack.startMonitoring({
+                                    videoId: 'live-feed', 
+                                    countId: 'count-display', 
+                                    badCountId: 'bad-count-display',
+                                    modeId: 'mode-display', 
+                                    panelId: 'feedback-display',
+                                    statusId: 'status-text'
+                                });
+                                document.getElementById('live-feed').style.display = 'block';
+                                
+                                // 清空切換提示文字
+                                document.getElementById('cam-switch-msg').textContent = '';
+                            }
+                        });
+                }, 800); // 緩衝時間，避免後端鏡頭釋放不及
+            });
+        }
+
+        /**
+         * 頁面載入完成後的初始化邏輯
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const targetMode = new URLSearchParams(window.location.search).get('mode') || 'auto';
+            
+            // ==========================================
+            // 👇 新增：讀取 user_config.json 並顯示模型 👇
+            // ==========================================
+            fetch('/JS/json/user_config.json')
+                .then(response => response.json())
+                .then(data => {
+                    const modelBadge = document.getElementById('model-badge');
+                    if (modelBadge) {
+                        let modelName = "Full (均衡預設)"; // 預設值
+                        
+                        // 對應上次在設定頁面寫入的 value ("1", "2", "3")
+                        if (data.mediapipe_model === "1") {
+                            modelName = "Lite (效能優先)";
+                            modelBadge.style.color = "#a8ffb2"; // 淺綠色
+                        } else if (data.mediapipe_model === "2") {
+                            modelName = "Full (均衡預設)";
+                            modelBadge.style.color = "#00ffcc"; // 藍綠色
+                        } else if (data.mediapipe_model === "3") {
+                            modelName = "Heavy (精準優先)";
+                            modelBadge.style.color = "#ff9e9e"; // 淺紅色
+                        }
+
+                        modelBadge.innerHTML = `🤖 AI 模型: ${modelName}`;
+                        modelBadge.style.display = 'block'; // 顯示出來
+                    }
+                })
+                .catch(err => console.warn("無法讀取模型設定:", err));
+            });
+            // ==========================================
+            // 👆 新增結束 👆
+            // ==========================================
+
+        /**
+         * 頁面載入完成後的初始化邏輯
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // 從 URL 取得目標模式，預設為 auto
+            const targetMode = new URLSearchParams(window.location.search).get('mode') || 'auto';
+            //新增：抓取目前的 AI 模型並顯示在右上角的 badge
+            fetch('/api/get_model_info')
+                .then(res => res.json())
+                .then(data => {
+                    const badge = document.getElementById('model-badge');
+                    if (badge) {
+                        badge.style.display = 'block';
+                        badge.innerText = `🤖 AI 模型: ${data.current_model || "預設"}`;
+                    }
+                })
+                .catch(e => console.error("無法讀取模型名稱:", e));
+
+            // 確保先掃描完鏡頭，再通知後端啟動偵測，避免相機資源衝突
+            loadCameras().finally(() => {
+                fetch(`/api/start?mode=${targetMode}`, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(() => {
+                        // 啟動成功後，開始前端的數據輪詢
+                        if (window.actiTrack) {
+                            window.actiTrack.startMonitoring({
+                                videoId: 'live-feed', 
+                                countId: 'count-display', 
+                                badCountId: 'bad-count-display',
+                                modeId: 'mode-display', 
+                                panelId: 'feedback-display',
+                                statusId: 'status-text' 
+                            });
+                            document.getElementById('live-feed').style.display = 'block';
+                        }
+                    })
+                    .catch(e => console.error("啟動偵測失敗:", e));
+            });
+        });
+
+
+        
+    </script>
+</body>
+<script src="js/ActiTrack_User_Sync.js"></script>
+</html>

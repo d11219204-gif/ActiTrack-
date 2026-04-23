@@ -1,0 +1,322 @@
+<section class="acti-hero-light">
+  <style>
+    .acti-hero-light {
+      --bg: #f7f8fc;
+      --surface: #ffffff;
+      --surface-2: #eef4ff;
+      --line: #dbe4f0;
+      --text: #1f2937;
+      --muted: #5b6472;
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --accent: #14b8a6;
+      --shadow: 0 20px 45px rgba(37, 99, 235, 0.08);
+      width: 100%;
+      background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.12), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(20, 184, 166, 0.10), transparent 22%),
+        linear-gradient(180deg, #ffffff 0%, #f7f8fc 100%);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      padding: 72px 48px;
+      border-radius: 0;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .acti-hero-light * {
+      box-sizing: border-box;
+    }
+
+    .acti-hero-light::before,
+    .acti-hero-light::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+      filter: blur(6px);
+    }
+
+    .acti-hero-light::before {
+      width: 320px;
+      height: 320px;
+      top: -120px;
+      right: -90px;
+      background: rgba(37, 99, 235, 0.10);
+    }
+
+    .acti-hero-light::after {
+      width: 260px;
+      height: 260px;
+      left: -80px;
+      bottom: -120px;
+      background: rgba(20, 184, 166, 0.10);
+    }
+
+    .acti-hero-wrap {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .acti-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      border: 1px solid #bfdbfe;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+
+    .acti-title {
+      margin: 0;
+      font-size: clamp(40px, 7vw, 78px);
+      font-weight: 900;
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      color: #111827;
+    }
+
+    .acti-title span {
+      color: var(--primary);
+    }
+
+    .acti-subtitle {
+      margin: 22px 0 0;
+      max-width: 980px;
+      font-size: clamp(18px, 2.1vw, 24px);
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .acti-panel {
+      margin-top: 36px;
+      width: 100%;
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(219,228,240,0.95);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .acti-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .acti-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .acti-card h3 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      color: #0f172a;
+    }
+
+    .acti-card p,
+    .acti-card li {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.95;
+      color: var(--muted);
+    }
+
+    .acti-card--wide {
+      grid-column: span 4;
+      min-height: 100%;
+    }
+
+    .acti-card--feature {
+      grid-column: span 6;
+      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+    }
+
+    .acti-card--message {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 20px;
+      align-items: center;
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
+    }
+
+    .acti-feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .acti-feature-list li {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .acti-feature-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+    }
+
+    .acti-highlight-box {
+      background: var(--surface-2);
+      border: 1px solid #c7ddff;
+      border-radius: 20px;
+      padding: 22px;
+    }
+
+    .acti-highlight-box strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+    }
+
+    .acti-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .acti-tag {
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      color: #334155;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    @media (max-width: 1080px) {
+      .acti-card--wide,
+      .acti-card--feature {
+        grid-column: span 6;
+      }
+
+      .acti-card--message {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .acti-hero-light {
+        padding: 48px 18px;
+      }
+
+      .acti-panel {
+        padding: 16px;
+        border-radius: 20px;
+      }
+
+      .acti-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .acti-card--wide,
+      .acti-card--feature,
+      .acti-card--message {
+        grid-column: auto;
+      }
+
+      .acti-card {
+        padding: 20px;
+        border-radius: 18px;
+      }
+
+      .acti-card h3 {
+        font-size: 21px;
+      }
+
+      .acti-card p,
+      .acti-card li {
+        font-size: 16px;
+      }
+    }
+  </style>
+
+  <div class="acti-hero-wrap">
+    <div class="acti-badge">ActiTrack 運動型態的辨識系統</div>
+    <h1 class="acti-title">Acti<span>Track</span> AI</h1>
+    <p class="acti-subtitle">智慧姿勢辨識，讓每一次訓練更精準。透過 AI 與電腦視覺技術，即時分析動作表現，協助使用者掌握自己的訓練狀態，打造更有效率也更安全的運動體驗。</p>
+
+    <div class="acti-panel">
+      <div class="acti-grid">
+        <article class="acti-card acti-card--wide">
+          <h3>這是什麼系統</h3>
+          <p>ActiTrack AI 是一套結合人工智慧與電腦視覺技術的智慧健身輔助系統，透過攝影機即時偵測人體姿勢，分析使用者的動作表現，幫助使用者更清楚掌握自己的訓練狀態。</p>
+        </article>
+
+        <article class="acti-card acti-card--wide">
+          <h3>製作者</h3>
+          <p>本系統由德明財經科技大學 資訊管理學系 AI專班 第四組製作開發，運用 Python、OpenCV、Mediapipe 與資料庫技術，打造一套兼具即時辨識、動作分析與數據紀錄功能的專題作品。</p>
+        </article>
+
+        <article class="acti-card acti-card--wide">
+          <h3>用途</h3>
+          <p>本系統主要用於健身動作輔助與姿勢分析，讓使用者在沒有教練陪同的情況下，也能透過系統即時了解自己的動作是否正確，進一步提升運動效率與安全性。</p>
+        </article>
+
+        <article class="acti-card acti-card--feature">
+          <h3>主要功能</h3>
+          <ul class="acti-feature-list">
+            <li>即時人體姿勢辨識</li>
+            <li>骨架關鍵點偵測與動作分析</li>
+            <li>統計運動次數、正確次數、錯誤次數與正確率</li>
+            <li>紀錄訓練資料，方便後續查詢與分析</li>
+          </ul>
+        </article>
+
+        <article class="acti-card acti-card--feature">
+          <h3>希望使用者如何使用</h3>
+          <p>我們希望使用者能以簡單直覺的方式操作本系統，只需站在攝影機前並開始動作，系統便能自動進行姿勢辨識與數據紀錄。在訓練過程中，使用者可以依照畫面上的辨識結果調整姿勢，透過即時回饋逐步修正動作，讓每一次訓練都更加有效率。</p>
+        </article>
+
+        <article class="acti-card acti-card--message">
+          <div>
+            <h3>給使用者的一段話</h3>
+            <p>歡迎使用 ActiTrack AI。希望這套系統能成為你在運動過程中的智慧輔助工具，不只幫助你看見自己的動作表現，也陪伴你一步一步建立更正確、更穩定的運動習慣。無論你是剛開始接觸健身，還是希望提升訓練品質，我們都期待你能透過 ActiTrack AI，感受到科技帶來的便利與改變。</p>
+          </div>
+          <div class="acti-highlight-box">
+            <strong>技術核心</strong>
+            <p>Python、OpenCV、Mediapipe、資料庫整合、動作分析、訓練數據紀錄。</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="acti-tags">
+        <span class="acti-tag">Python</span>
+        <span class="acti-tag">OpenCV</span>
+        <span class="acti-tag">Mediapipe</span>
+        <span class="acti-tag">姿勢辨識</span>
+        <span class="acti-tag">智慧健身</span>
+        <span class="acti-tag">動作分析</span>
+      </div>
+    </div>
+  </div>
+</section>

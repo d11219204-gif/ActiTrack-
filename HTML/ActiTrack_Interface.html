@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActiTrack運動辨識</title>
+    <link rel="stylesheet" href="actitrack-style.css">
+    <style>
+        /* 強制覆蓋外部CSS，修正無法滾動的問題 */
+        .main-content { overflow-y: auto !important; padding-bottom: 40px; }
+    </style>
+</head>
+<body>
+    <!-- 側邊欄關閉時顯示的還原按鈕，點擊呼叫 toggleSidebar() -->
+    <button id="restore-btn" class="restore-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- 整體外框，用 flexbox 讓側邊欄與主內容並排 -->
+    <div class="container" id="container">
+
+        <!-- 側邊欄，由 toggleSidebar() 控制開關 -->
+        <div class="sidebar" id="sidebar">
+
+            <!-- 頂部：關閉按鈕 + 點擊標題可回首頁 -->
+            <div class="header">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="title" onclick="window.location.href='ActiTrack_Interface.html'" style="cursor: pointer;">ActiTrack運動辨識</div>
+            </div>
+            
+            <!-- 手風琴選單區域 -->
+            <div class="menu-section">
+
+                <!-- 選單項目①：點擊展開/收合 submenu1（目前為空，內容由JS動態新增） -->
+                <div class="menu-item" onclick="toggleSubmenu('submenu1')">
+                    <span>運動紀錄新增</span>
+                    <span class="dropdown-icon" id="icon1">▼</span>
+                </div>
+                <div class="submenu collapsed" id="submenu1"></div>
+                
+                <!-- 選單項目②：展開後顯示兩個頁面連結 -->
+                <div class="menu-item" onclick="toggleSubmenu('submenu2')">
+                    <span>記錄查詢</span>
+                    <span class="dropdown-icon" id="icon2">▼</span>
+                </div>
+                <div class="submenu collapsed" id="submenu2">
+                    <div class="submenu-item" onclick="window.location.href='ActiTrack_Exercise_Record.html'">運動記錄</div>
+                    <div class="submenu-item" onclick="window.location.href='ActiTrack_BMI_Record.html'">數值紀錄</div>
+                </div>
+            </div>
+            
+            <!-- 使用者資訊區：頭像、名稱、設定按鈕 -->
+            <div class="user-section">
+                <div class="user-info-container">
+                    <!-- 有頭像顯示圖片，否則顯示SVG預設圖示（由JS切換） -->
+                    <div class="user-icon">
+                        <img id="sidebar-user-avatar" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                        <svg id="sidebar-user-placeholder" class="avatar-placeholder" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </div>
+                    <!-- 使用者名稱，由JS動態寫入 -->
+                    <div class="user-name">user</div>
+                </div>
+                <!-- 點擊前往設定頁面 -->
+                <div class="settings-icon" onclick="window.location.href='ActiTrack_Settings_Profile.html'">⚙</div>
+            </div>
+        </div>
+
+        <!-- 拖曳此分隔線可調整側邊欄寬度（由JS控制） -->
+        <div class="resizer" id="resizer"></div>
+
+        <!-- 主內容區，calc() 讓字體大小隨視窗寬度變化 -->
+        <div class="main-content">
+            <!--<h1 class="content-header" style="font-size: calc(3vw + 24px); font-weight: bold; margin-bottom: 20px; color: #333;">Acti動覺</h1>-->
+            
+            <!-- 初始顯示載入文字，內容由JS從外部檔案讀取後替換 -->
+            <div id="dynamic-help-text" class="content-text" style="font-size: calc(1vw + 8px); line-height: 1.6;">
+                載入介紹文字中...
+            </div>
+        </div>
+    </div>
+
+    <!-- actitrack-api.js：通訊處理 / actitrack-ui.js：共用UI元件 / actitrack-interface.js：此頁專屬邏輯 -->
+    <script src="js/actitrack-api.js"></script>
+    <script src="js/actitrack-ui.js"></script>
+    <script src="js/actitrack-interface.js"></script>
+    
+    <!-- DOM載入完成後執行初始化 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            ActiTrackUI.init();
+        });
+    </script>
+</body>
+
+<!-- 注意：建議移至 </body> 前，此處可能是為了最後執行而放置於外 -->
+<script src="js/ActiTrack_User_Sync.js"></script>
+
+</html>
