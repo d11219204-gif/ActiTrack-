@@ -1,0 +1,17 @@
+[
+    {
+        "user_info": null,
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/20 20:30:58",
+                "exercise_name": null,
+                "total_count": 15,
+                "correct_count": 0,
+                "wrong_count": 0,
+                "accuracy": 0.0,
+                "correct": 11,
+                "wrong": 4
+            }
+        ]
+    }
+]

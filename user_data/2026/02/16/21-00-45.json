@@ -1,0 +1,19 @@
+[
+    {
+        "user_info": {
+            "username": "TestUser",
+            "height": 175,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/16 21:00:45",
+                "exercise_name": "TestExercise",
+                "total_count": 20,
+                "correct_count": 15,
+                "wrong_count": 5,
+                "accuracy": 75.0
+            }
+        ]
+    }
+]

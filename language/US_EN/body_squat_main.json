@@ -1,0 +1,50 @@
+{
+    "module_name": "Squat",
+    "log_types": {
+        "info": "Info",
+        "error": "Error",
+        "success": "Success",
+        "warning": "Warning"
+    },
+    "messages": {
+        "system_init": "Detector System Initialized",
+        "config_loaded": "Config Loaded Successfully",
+        "action_correct": "Correct Form",
+        "fail_knee_angle": "Knee Angle Incorrect (Knees Too Far Forward)",
+        "fail_hip_angle": "Hip Angle Incorrect (Bending Too Much)",
+        
+        "ui_count": "Count",
+        "ui_correct": "Correct",
+        "ui_wrong": "Wrong",
+        
+        "test_mode_start": "Starting Squat Standalone Test (Smart Camera Mode)",
+        "model_not_found": "Model File Not Found",
+        "model_download_hint": "Please run model_loader.py to download the model",
+        "model_loading": "Loading MediaPipe Model",
+        "model_loaded": "Model Loaded Successfully",
+        
+        "camera_default_try": "Attempting to Open Default Camera (0)",
+        "camera_default_failed": "Default Camera Has No Signal",
+        "camera_scan_start": "Default Camera Failed, Scanning Available Devices",
+        "camera_not_found": "No Available Cameras Found",
+        "camera_check_connection": "Please Check Connection or Privacy Settings",
+        "camera_auto_select": "Auto-Selecting the Only Available Camera",
+        "camera_multiple_found": "Multiple Cameras Detected, Please Select",
+        "camera_select_prompt": "Enter Index (Default Recommended)",
+        "camera_invalid_index": "Invalid Index, Please Re-enter",
+        "camera_input_number": "Please Enter a Number",
+        "camera_selected_failed": "Selected Camera Failed to Start",
+        "camera_opened": "Camera Started! Press 'q' to Exit",
+        
+        "frame_read_failed": "Frame Read Failed",
+        "user_exit": "User Exited Program",
+        "user_interrupt": "User Force Interrupted",
+        "critical_error": "Exception Occurred",
+        "press_enter_to_exit": "Press Enter to Exit",
+        
+        "final_stats": "=== Final Statistics ===",
+        "total_count": "Total Count",
+        "correct_count": "Correct Count",
+        "wrong_count": "Wrong Count"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "module_name": "資料庫模組",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "db_init_success": "SQLite 資料庫初始化完成",
+        "db_init_failed": "資料庫初始化失敗",
+        "save_success": "運動紀錄已同步至 SQLite",
+        "save_failed": "SQLite 寫入失敗",
+        "table_created": "已建立資料表 exercise_records",
+        "record_details": "紀錄詳細資訊"
+    }
+}

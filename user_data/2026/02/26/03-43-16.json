@@ -1,0 +1,20 @@
+[
+    {
+        "user_info": {
+            "username": "User",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/26 03:43:16",
+                "exercise_name": "伏地挺身",
+                "total_count": 14,
+                "correct_count": 12,
+                "wrong_count": 2,
+                "accuracy": 85.71,
+                "duration_sec": 40.8
+            }
+        ]
+    }
+]

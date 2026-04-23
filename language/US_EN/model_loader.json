@@ -1,0 +1,31 @@
+{
+    "module_name": "ModelManager",
+    "log_types": {
+        "info": "INFO",
+        "error": "ERROR",
+        "success": "SUCCESS",
+        "warning": "WARNING"
+    },
+    "messages": {
+        "title": "MediaPipe Model Manager",
+        "current_model": "Current Model",
+        "model_none": "None (Download Required)",
+        "model_list": "Available Models",
+        "select_prompt_download": "Enter index to download (Default: 2)",
+        "select_prompt_switch": "Enter index to switch (Press Enter to skip)",
+        "keep_current": "Keeping current model",
+        "cancel_switch": "Switch cancelled",
+        "already_using": "Already using this version",
+        "backup_start": "Backing up old model",
+        "restore_start": "Found backup, restoring",
+        "download_start": "Downloading",
+        "download_complete": "Download complete, installing...",
+        "switch_success": "Model switched to",
+        "download_failed": "Download failed",
+        "file_corrupted": "Model file corrupted, redownloading",
+        "directory_created": "Directory created",
+        "desc_lite": "Fastest, lower accuracy (~2.8MB). For older devices.",
+        "desc_full": "Balanced speed/accuracy (~5.5MB). Best for most cases.",
+        "desc_heavy": "Highest accuracy, slower (~10MB). For detailed analysis."
+    }
+}

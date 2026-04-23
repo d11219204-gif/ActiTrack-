@@ -1,0 +1,12 @@
+{
+    "standing": [
+        "SquatDetector",
+        "JumpingJackDetector",
+        "RunningDetector"
+        
+    ],
+    "lying": [
+        "SitUpDetector",
+        "PushUpDetector"
+    ]
+}

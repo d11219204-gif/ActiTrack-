@@ -1,0 +1,14 @@
+{
+    "module_name": "LanguageLoader",
+    "log_types": {
+        "info": "INFO",
+        "error": "ERROR",
+        "success": "SUCCESS",
+        "warning": "WARNING"
+    },
+    "messages": {
+        "load_success": "Language file loaded successfully",
+        "file_not_found": "Language file not found",
+        "json_error": "JSON format error"
+    }
+}

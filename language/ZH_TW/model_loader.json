@@ -1,0 +1,31 @@
+{
+    "module_name": "模型管理器",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "title": "MediaPipe 模型管理器",
+        "current_model": "目前使用模型",
+        "model_none": "無 (需下載)",
+        "model_list": "可用模型列表",
+        "select_prompt_download": "請輸入編號下載模型 (預設 2)",
+        "select_prompt_switch": "請輸入編號切換模型 (直接 Enter 跳過)",
+        "keep_current": "保持使用當前模型",
+        "cancel_switch": "取消切換",
+        "already_using": "已經是該版本，無需切換",
+        "backup_start": "正在備份舊模型",
+        "restore_start": "發現備份檔案，正在還原",
+        "download_start": "開始下載",
+        "download_complete": "下載完成，正在安裝...",
+        "switch_success": "模型已切換為",
+        "download_failed": "下載失敗",
+        "file_corrupted": "模型檔案損毀，需要重新下載",
+        "directory_created": "建立目錄",
+        "desc_lite": "速度最快，精度普通 (~2.8MB)。適合老舊手機。",
+        "desc_full": "速度與精度平衡 (~5.5MB)。適合大多數場景。",
+        "desc_heavy": "精度最高，速度較慢 (~10MB)。適合高精度分析。"
+    }
+}

@@ -1,0 +1,19 @@
+[
+    {
+        "user_info": {
+            "username": "WebUser",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/20 21:06:01",
+                "exercise_name": "JumpingJack",
+                "total_count": 14,
+                "correct_count": 12,
+                "wrong_count": 2,
+                "accuracy": 85.71
+            }
+        ]
+    }
+]

@@ -1,0 +1,17 @@
+{
+    "module_name": "紀錄模組",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "save_success": "運動紀錄已儲存至",
+        "save_failed": "儲存失敗",
+        "time": "時間",
+        "item": "項目",
+        "total": "總數",
+        "ok": "正確"
+    }
+}

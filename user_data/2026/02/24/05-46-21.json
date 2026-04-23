@@ -1,0 +1,19 @@
+[
+    {
+        "user_info": {
+            "username": "WebUser",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/24 05:46:21",
+                "exercise_name": "Squat",
+                "total_count": 13,
+                "correct_count": 12,
+                "wrong_count": 1,
+                "accuracy": 92.31
+            }
+        ]
+    }
+]

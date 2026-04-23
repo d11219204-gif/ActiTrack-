@@ -1,0 +1,17 @@
+{
+    "module_name": "JsonWriter",
+    "log_types": {
+        "info": "INFO",
+        "error": "ERROR",
+        "success": "SUCCESS",
+        "warning": "WARNING"
+    },
+    "messages": {
+        "save_success": "Exercise record saved to",
+        "save_failed": "Save failed",
+        "time": "Time",
+        "item": "Item",
+        "total": "Total",
+        "ok": "OK"
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "module_name": "仰臥起坐",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "system_init": "偵測系統已啟動",
+        "config_loaded": "設定檔載入完成",
+        "action_correct": "動作正確",
+        "fail_hands_head": "雙手未抱頭",
+        "fail_knee_bent": "膝蓋未彎曲",
+        
+        "ui_count": "次數",
+        "ui_correct": "正確",
+        "ui_wrong": "錯誤",
+        "auto_pause": "--- 自動暫停 (無動作) ---",
+        "ui_paused": "暫停中",
+        "total_time": "時間",
+        
+        "test_mode_start": "啟動仰臥起坐獨立測試 (Smart Camera Mode)",
+        "model_not_found": "找不到模型檔",
+        "model_download_hint": "請先執行 model_loader.py 下載模型",
+        "model_loading": "正在載入 MediaPipe 模型",
+        "model_loaded": "模型載入成功",
+        
+        "camera_default_try": "嘗試開啟預設攝影機 (0)",
+        "camera_default_failed": "預設攝影機無訊號",
+        "camera_scan_start": "預設攝影機無法開啟，開始掃描可用裝置",
+        "camera_not_found": "找不到任何可用的攝影機",
+        "camera_check_connection": "請檢查連接線或隱私權限設定",
+        "camera_auto_select": "自動選擇唯一可用攝影機",
+        "camera_multiple_found": "偵測到多個攝影機，請選擇",
+        "camera_select_prompt": "請輸入編號 (預設推薦)",
+        "camera_invalid_index": "無效的編號，請重新輸入",
+        "camera_input_number": "請輸入數字",
+        "camera_selected_failed": "選定的攝影機無法啟動",
+        "camera_opened": "攝影機已啟動！按 'q' 離開",
+        
+        "frame_read_failed": "影像讀取失敗",
+        "user_exit": "使用者結束程式",
+        "user_interrupt": "使用者強制中斷",
+        "critical_error": "發生例外狀況",
+        "press_enter_to_exit": "按 Enter 結束",
+        
+        "final_stats": "=== 最終統計 ===",
+        "total_count": "總次數",
+        "correct_count": "正確次數",
+        "wrong_count": "錯誤次數",
+        "warning_full_body":"請全身入鏡",
+        "error_analysis": "詳細錯誤分析",
+        "err_hands_total": "雙手未抱頭總計",
+        "err_knee_total": "膝蓋未彎曲總計"
+    }
+}

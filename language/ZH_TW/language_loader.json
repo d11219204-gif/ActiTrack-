@@ -1,0 +1,14 @@
+{
+    "module_name": "語言載入器",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "load_success": "成功載入語言檔",
+        "file_not_found": "找不到語言檔",
+        "json_error": "JSON 格式錯誤"
+    }
+}

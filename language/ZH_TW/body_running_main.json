@@ -1,0 +1,39 @@
+{
+    "module_name": "跑步",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "system_init": "偵測系統已啟動",
+        "config_loaded": "設定檔載入完成",
+        "warning_show_full_body": "請展示全身",
+        "status_paused": "暫停中",
+        "step_recorded": "記錄步數",
+        "timer_paused": "--- 自動暫停 (無動作) ---",
+        "timer_resumed": "--- 恢復計時 ---",
+        
+        "ui_time": "時間",
+        "ui_dist": "距離",
+        "ui_steps": "步數",
+        
+        "test_mode_start": "啟動跑步獨立測試 (Smart Camera Mode)",
+        "model_not_found": "找不到模型檔",
+        "camera_scan_start": "預設攝影機無法開啟，開始掃描可用裝置",
+        "camera_not_found": "找不到任何可用的攝影機",
+        "camera_multiple_found": "偵測到多個攝影機，請選擇",
+        "camera_select_prompt": "請輸入編號 (預設推薦)",
+        "camera_opened": "攝影機已啟動",
+        
+        "final_stats": "=== 最終統計 ===",
+        "total_count": "總次數",
+        "total_time": "總時間",
+        "total_dist": "總距離",
+        "unit_sec": "秒",
+        "unit_meter": "公尺",
+        "warning_full_body":"請全身入鏡"
+        
+    }
+}

@@ -1,0 +1,19 @@
+[
+    {
+        "user_info": {
+            "username": "User",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/16 21:13:42",
+                "exercise_name": "開合跳",
+                "total_count": 13,
+                "correct_count": 12,
+                "wrong_count": 1,
+                "accuracy": 92.31
+            }
+        ]
+    }
+]

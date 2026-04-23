@@ -1,0 +1,37 @@
+{
+    "module_name": "Running",
+    "log_types": {
+        "info": "Info",
+        "error": "Error",
+        "success": "Success",
+        "warning": "Warning"
+    },
+    "messages": {
+        "system_init": "Detector System Initialized",
+        "config_loaded": "Config Loaded Successfully",
+        "warning_show_full_body": "Please Show Full Body",
+        "status_paused": "PAUSED",
+        "step_recorded": "Step Recorded",
+        "timer_paused": "--- Auto Paused (No Activity) ---",
+        "timer_resumed": "--- Resumed ---",
+        
+        "ui_time": "Time",
+        "ui_dist": "Dist",
+        "ui_steps": "Steps",
+        
+        "test_mode_start": "Starting Running Standalone Test (Smart Camera Mode)",
+        "model_not_found": "Model File Not Found",
+        "camera_scan_start": "Default Camera Failed, Scanning Available Devices",
+        "camera_not_found": "No Available Cameras Found",
+        "camera_multiple_found": "Multiple Cameras Detected, Please Select",
+        "camera_select_prompt": "Enter Index (Default Recommended)",
+        "camera_opened": "Camera Started",
+        
+        "final_stats": "=== Final Statistics ===",
+        "total_count": "Total Steps",
+        "total_time": "Total Time",
+        "total_dist": "Total Distance",
+        "unit_sec": "sec",
+        "unit_meter": "m"
+    }
+}

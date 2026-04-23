@@ -1,0 +1,42 @@
+{
+    "module_name": "主程式",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "camera_scanning": "正在掃描可用攝影機...",
+        "camera_not_found": "錯誤: 找不到任何可用攝影機",
+        "camera_auto_select": "自動選擇唯一攝影機",
+        "camera_multiple": "偵測到多個攝影機:",
+        "camera_select_prompt": "請輸入編號 (預設使用第一個)",
+        "user_info_prompt": "=== 請輸入使用者資訊 (按 Enter 使用預設值) ===",
+        "user_name_input": "使用者名稱 (User)",
+        "height_input": "身高 cm (170)",
+        "weight_input": "體重 kg (70)",
+        "user_info_confirm": "確認資訊",
+        "loading_modules": "正在載入模組",
+        "module_ok": "載入成功",
+        "module_failed": "載入失敗",
+        "model_missing_alert": "警告: 找不到模型檔，進入下載模式...",
+        "camera_init_error": "無法初始化任何攝影機",
+        "camera_started": "攝影機已啟動",
+        "paused": "暫停",
+        "no_active_detectors": "無運作中的偵測器",
+        "detector_locked": "鎖定運動",
+        "detector_unloaded": "錯誤過多，已自動卸載",
+        "debug_mode": "除錯模式",
+        "summary_title": "=== 運動結算 ===",
+        "writing_record": "寫入紀錄",
+        "record_distance": "距離",
+        "record_time": "時間",
+        "no_valid_record": "沒有有效的完整運動紀錄 (未鎖定任何運動或次數為0)",
+        "press_q_exit": "按 'q' 離開",
+        "press_p_pause": "按 'p' 暫停",
+        "press_d_debug": "按 'd' 切換除錯",
+        "wrong_alert": "動作錯誤!",
+        "system_error": "系統錯誤"
+    }
+}

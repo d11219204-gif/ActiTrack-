@@ -1,0 +1,42 @@
+{
+    "module_name": "Main",
+    "log_types": {
+        "info": "INFO",
+        "error": "ERROR",
+        "success": "SUCCESS",
+        "warning": "WARNING"
+    },
+    "messages": {
+        "camera_scanning": "Scanning for available cameras...",
+        "camera_not_found": "Error: No available cameras found",
+        "camera_auto_select": "Auto-selecting only camera",
+        "camera_multiple": "Multiple cameras detected:",
+        "camera_select_prompt": "Enter index (Default: first)",
+        "user_info_prompt": "=== Enter User Info (Press Enter for defaults) ===",
+        "user_name_input": "Username (User)",
+        "height_input": "Height cm (170)",
+        "weight_input": "Weight kg (70)",
+        "user_info_confirm": "Info confirmed",
+        "loading_modules": "Loading Modules",
+        "module_ok": "Loaded",
+        "module_failed": "Failed",
+        "model_missing_alert": "Warning: Model file missing, entering download mode...",
+        "camera_init_error": "Failed to initialize any camera",
+        "camera_started": "Camera started",
+        "paused": "PAUSED",
+        "no_active_detectors": "No active detectors",
+        "detector_locked": "Detector Locked",
+        "detector_unloaded": "Too many errors, unloaded",
+        "debug_mode": "Debug Mode",
+        "summary_title": "=== Summary ===",
+        "writing_record": "Saving Record",
+        "record_distance": "Distance",
+        "record_time": "Time",
+        "no_valid_record": "No valid record found (No lock or 0 count)",
+        "press_q_exit": "Press 'q' to exit",
+        "press_p_pause": "Press 'p' to pause",
+        "press_d_debug": "Press 'd' to toggle debug",
+        "wrong_alert": "WRONG FORM!",
+        "system_error": "System Error"
+    }
+}

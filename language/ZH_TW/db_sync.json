@@ -1,0 +1,22 @@
+{
+    "module_name": "同步模組",
+    "log_types": {
+        "info": "資訊",
+        "error": "錯誤",
+        "success": "成功",
+        "warning": "警告"
+    },
+    "messages": {
+        "sync_start": "ActiTrack 雙向同步工具啟動 (JSON 為主)",
+        "task1_start": "[任務 1] 掃描 JSON 寫入 SQLite",
+        "task1_complete": "JSON 同步至資料庫完成",
+        "task2_start": "[任務 2] 從 SQLite 還原缺少的 JSON 檔案",
+        "task2_complete": "匯出 JSON 完成，已還原資料夾結構",
+        "json_scanned": "掃描到的 JSON 檔案數",
+        "db_inserted": "成功新增至資料庫",
+        "db_skipped": "略過重複資料",
+        "json_created": "生成全新 JSON 檔案數",
+        "read_failed": "讀取檔案失敗",
+        "write_failed": "寫入檔案失敗"
+    }
+}

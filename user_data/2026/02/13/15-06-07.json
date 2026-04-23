@@ -1,0 +1,19 @@
+[
+    {
+        "user_info": {
+            "username": "User",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/13 15:06:07",
+                "exercise_name": "PushUpDetector",
+                "total_count": 15,
+                "correct_count": 13,
+                "wrong_count": 2,
+                "accuracy": 86.67
+            }
+        ]
+    }
+]

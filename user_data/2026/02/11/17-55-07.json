@@ -1,0 +1,21 @@
+[
+    {
+        "user_info": {
+            "username": "User",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/11 17:55:07",
+                "exercise_name": "RunningDetector",
+                "total_count": 32,
+                "correct_count": 0,
+                "wrong_count": 0,
+                "accuracy": 0.0,
+                "distance_m": 23.19,
+                "duration_sec": 56.4
+            }
+        ]
+    }
+]

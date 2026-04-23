@@ -1,0 +1,20 @@
+[
+    {
+        "user_info": {
+            "username": "User",
+            "height": 170,
+            "weight": 70
+        },
+        "exercise_records": [
+            {
+                "timestamp": "2026/02/27 04:42:54",
+                "exercise_name": "仰臥起坐",
+                "total_count": 13,
+                "correct_count": 10,
+                "wrong_count": 3,
+                "accuracy": 76.92,
+                "duration_sec": 27.4
+            }
+        ]
+    }
+]
